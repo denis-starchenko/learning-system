@@ -1,0 +1,1 @@
+It's system has developing only for studying purposes
