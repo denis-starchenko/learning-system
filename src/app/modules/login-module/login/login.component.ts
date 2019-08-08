@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from "../login.service";
-import { User } from "../user";
+import { User } from "../interfaces/user";
+import { Messages } from "../constants/messages";
 
 @Component({
   selector: 'ls-login',
@@ -11,40 +12,33 @@ import { User } from "../user";
 export class LoginComponent implements OnInit {
   private userEmail: string;
   private userPassword: string;
+  private validation = new Messages();
+  private loginForm: FormGroup;
 
   constructor(private loginService: LoginService, private formBuilder: FormBuilder) {}
 
   ngOnInit() {
-
+    this.createForm();
   }
 
-  loginForm = this.formBuilder.group({
-    email: ['', [
-      Validators.required,
-      Validators.minLength(4)
-    ]],
-    password: ['', [
-      Validators.required,
-      Validators.minLength(6)
-    ]]
-  })
-
-  validation_messages = {
-    email: [
-      {type: 'required', message: 'Email is required'},
-      {type: 'minlength', message: 'Email must be at least 4 characters long'},
-    ],
-    password: [
-      {type: 'required', message: 'Password is required'},
-      {type: 'minlength', message: 'Password must be at least 6 characters long'},
-    ]
+  private createForm(): void {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [
+        Validators.required,
+        Validators.minLength(4)
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6)
+      ]]
+    })
   }
 
-  getControl(input) {
+  getControl(input: string): AbstractControl {
     return this.loginForm.get(input);
   }
 
-  onSubmit() {
+  onSubmit(): void {
     let user: User = {
       login: this.userEmail,
       password: this.userPassword
