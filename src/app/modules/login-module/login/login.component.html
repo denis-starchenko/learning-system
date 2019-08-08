@@ -8,7 +8,7 @@
              required
              #email
              (input)="userEmail = email.value">
-      <mat-error *ngFor="let validator of validation_messages.email">
+      <mat-error *ngFor="let validator of validation.messages.email">
         <mat-error *ngIf="getControl('email').hasError(validator.type)">
           <strong>{{validator.message}}</strong>
         </mat-error>
@@ -23,7 +23,7 @@
              required
              #password
              (input)="userPassword = password.value">
-      <mat-error *ngFor="let validator of validation_messages.email">
+      <mat-error *ngFor="let validator of validation.messages.password">
         <mat-error *ngIf="getControl('password').hasError(validator.type)">
           <strong>{{validator.message}}</strong>
         </mat-error>
