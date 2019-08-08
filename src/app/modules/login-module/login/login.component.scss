@@ -1,0 +1,47 @@
+.main-container {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #ffffff;
+  border: darkgray 2px solid;
+  width: 400px;
+  padding: 20px;
+}
+
+input {
+  height: 40px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 0 10px 0;
+  width: 10vw;
+  height: 4vh;
+  align-self: center;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+button:active {
+  box-shadow: 0 12px 16px 0 rgba(0,80,100,0.24), 0 17px 50px 0 rgba(0,80,100,0.19);
+  color: rgba(0,0,0,0.24);
+}

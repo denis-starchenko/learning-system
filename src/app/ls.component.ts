@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./ls.component.scss']
 })
 export class LsComponent {
-  title = 'learning-system';
+
 }

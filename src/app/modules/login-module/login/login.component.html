@@ -1,0 +1,34 @@
+<div class="main-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+      <input matInput
+             type="email"
+             placeholder="Enter email"
+             formControlName="email"
+             required
+             #email
+             (input)="userEmail = email.value">
+      <mat-error *ngFor="let validator of validation_messages.email">
+        <mat-error *ngIf="getControl('email').hasError(validator.type)">
+          <strong>{{validator.message}}</strong>
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput
+             type="password"
+             placeholder="Enter password"
+             formControlName="password"
+             required
+             #password
+             (input)="userPassword = password.value">
+      <mat-error *ngFor="let validator of validation_messages.email">
+        <mat-error *ngIf="getControl('password').hasError(validator.type)">
+          <strong>{{validator.message}}</strong>
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+    <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
+  </form>
+</div>
