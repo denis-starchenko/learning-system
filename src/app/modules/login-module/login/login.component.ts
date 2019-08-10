@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from "../login.service";
 import { User } from "../interfaces/user";
-import { Messages } from "../constants/messages";
+import { messages } from "../constants/messages";
 
 @Component({
   selector: 'ls-login',
@@ -12,7 +12,7 @@ import { Messages } from "../constants/messages";
 export class LoginComponent implements OnInit {
   private userEmail: string;
   private userPassword: string;
-  private validation = new Messages();
+  private validMessages = messages;
   private loginForm: FormGroup;
 
   constructor(private loginService: LoginService, private formBuilder: FormBuilder) {}
