@@ -1,0 +1,49 @@
+@import '../../../../scss/constants/colors';
+
+.main-container {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: $form_background;
+  border: $form_border 2px solid;
+  width: 400px;
+  padding: 20px;
+}
+
+input {
+  height: 40px;
+}
+
+button {
+  background-color: $button_background;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 0 10px 0;
+  width: 10vw;
+  height: 4vh;
+  align-self: center;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  box-shadow: $button_shadow_hover;
+}
+
+button:active {
+  box-shadow: $button_shadow_active;
+  color: $button_text;
+}

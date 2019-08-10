@@ -1,0 +1,12 @@
+@import "../../../../scss/constants/colors";
+
+mat-toolbar {
+  background-color: $header_background;
+  -webkit-box-shadow: $header_box_shadow;
+  -moz-box-shadow: $header_box_shadow;
+  box-shadow: $header_box_shadow;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
