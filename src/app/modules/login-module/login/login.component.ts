@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   private createForm(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', [
+      login: ['', [
         Validators.required,
         Validators.minLength(4)
       ]],
@@ -39,10 +39,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let user: User = {
-      login: this.userEmail,
-      password: this.userPassword
-    };
-    this.loginService.login(user);
+   this.loginService.login(this.loginForm.getRawValue());
   }
 }

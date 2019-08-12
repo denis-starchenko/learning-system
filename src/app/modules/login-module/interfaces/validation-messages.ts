@@ -1,4 +1,4 @@
 export interface ValidationMessages {
-  email: Array<object>,
+  login: Array<object>,
   password: Array<object>
 }

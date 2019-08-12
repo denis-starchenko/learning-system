@@ -4,12 +4,12 @@
       <input matInput
              type="email"
              placeholder="Enter email"
-             formControlName="email"
+             formControlName="login"
              required
              #email
              (input)="userEmail = email.value">
-      <mat-error *ngFor="let validator of validMessages.email">
-        <mat-error *ngIf="getControl('email').hasError(validator.type)">
+      <mat-error *ngFor="let validator of validMessages.login">
+        <mat-error *ngIf="getControl('login').hasError(validator.type)">
           <strong>{{validator.message}}</strong>
         </mat-error>
       </mat-error>
