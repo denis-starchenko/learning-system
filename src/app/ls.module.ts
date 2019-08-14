@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { LsRoutingModule } from './ls-routing.module';
 import { LsComponent } from './ls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CustomMaterialModuleModule } from "./modules/custom-material-module/custom-material-module.module";
-import { ShareModuleModule } from "./modules/share-module/share-module.module";
-import { HttpClientModule } from "@angular/common/http";
+import { CustomMaterialModule } from "./modules/custom-material/custom-material.module";
+import { ShareModule } from "./modules/share/share.module";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { AuthInterceptor } from "./Interceptors/auth-interceptor";
+import { AuthService } from "./services/auth.service";
 
 
 @NgModule({
@@ -16,11 +18,18 @@ import { HttpClientModule } from "@angular/common/http";
     BrowserModule,
     LsRoutingModule,
     BrowserAnimationsModule,
-    CustomMaterialModuleModule,
-    ShareModuleModule,
+    CustomMaterialModule,
+    ShareModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    AuthService
+  ],
   bootstrap: [LsComponent]
 })
 export class LsModule { }

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { CustomMaterialModuleModule } from "../custom-material-module/custom-material-module.module";
-import { LoginModuleRoutingModule } from "./login-module-routing.module";
+import { CustomMaterialModule } from "../custom-material/custom-material.module";
+import { LoginRoutingModule } from "./login.routing.module";
 import { LoginService } from "./login.service";
 
 
@@ -16,8 +16,8 @@ import { LoginService } from "./login.service";
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    CustomMaterialModuleModule,
-    LoginModuleRoutingModule
+    CustomMaterialModule,
+    LoginRoutingModule
   ],
   exports: [
     LoginComponent
@@ -26,4 +26,4 @@ import { LoginService } from "./login.service";
     LoginService
   ]
 })
-export class LoginModuleModule { }
+export class LoginModule { }

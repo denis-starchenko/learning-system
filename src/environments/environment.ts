@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://fake-students.herokuapp.com/api/v1/login'
+  apiUrl: 'https://fake-students.herokuapp.com'
 };
 
 /*
