@@ -1,0 +1,71 @@
+<div class="main-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+      <input matInput
+             type="email"
+             placeholder="Enter email"
+             formControlName="login"
+             required>
+      <mat-error *ngFor="let validator of validMessages.login">
+        <mat-error *ngIf="getControl('login').hasError(validator.type)">
+          <strong>{{validator.message}}</strong>
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput
+             type="firstName"
+             placeholder="First Name"
+             formControlName="firstName"
+             required>
+      <mat-error *ngFor="let validator of validMessages.firstName">
+        <mat-error *ngIf="getControl('firstName').hasError(validator.type)">
+          <strong>{{validator.message}}</strong>
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput
+             type="lastName"
+             placeholder="Last Name"
+             formControlName="lastName"
+             required>
+      <mat-error *ngFor="let validator of validMessages.lastName">
+        <mat-error *ngIf="getControl('lastName').hasError(validator.type)">
+          <strong>{{validator.message}}</strong>
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput
+             type="password"
+             placeholder="Enter password"
+             formControlName="password"
+             required>
+      <mat-error *ngFor="let validator of validMessages.password">
+        <mat-error *ngIf="getControl('password').hasError(validator.type)">
+          <strong>{{validator.message}}</strong>
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput
+             type="password"
+             placeholder="Confirm password"
+             formControlName="confirmPassword"
+             required
+             [errorStateMatcher]="passwordsMatcher">
+      <mat-error *ngFor="let validator of validMessages.confirmPassword">
+        <mat-error *ngIf="getControl('confirmPassword').hasError(validator.type)">
+          <strong>{{validator.message}}</strong>
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <button type="submit" [disabled]="registerForm.invalid">Sign Up</button>
+  </form>
+</div>

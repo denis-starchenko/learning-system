@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from 'rxjs';
 import { environment } from "../../../environments/environment";
 import { User } from "./interfaces/user";
+import { AuthService } from "../../services/auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,18 @@ export class LoginService {
   private url = environment.apiUrl;
   private subject = new Subject();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   login(user: User) {
-    this.http.post<User>(this.url, user)
-      .subscribe(response => this.subject.next(response));
+    return this.http.post<User>(`${this.url}/api/v1/login`, user)
   }
 
-  getUserData(): Observable<any> {
+  notify(user) {
+    this.authService.setAuthorizationToken(user.token);
+    this.subject.next(user);
+  }
+
+  getObservable(): Observable<any> {
     return this.subject.asObservable();
   }
 }

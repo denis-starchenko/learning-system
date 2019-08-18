@@ -34,4 +34,4 @@ import {
     MatSidenavModule
   ]
 })
-export class CustomMaterialModuleModule { }
+export class CustomMaterialModule { }

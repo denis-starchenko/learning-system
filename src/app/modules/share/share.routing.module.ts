@@ -5,7 +5,11 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('../login-module/login-module.module').then(mod => mod.LoginModuleModule)
+    loadChildren: () => import('../login/login.module').then(mod => mod.LoginModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('../register/register.module').then(mod => mod.RegisterModule)
   },
   {
     path: '',
@@ -22,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ShareModuleRoutingModule { }
+export class ShareRoutingModule { }

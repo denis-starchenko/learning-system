@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "https://fake-students.herokuapp.com",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "changeOrigin": true
+  }
+}

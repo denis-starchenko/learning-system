@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from "../login.service";
-import { User } from "../interfaces/user";
-import { messages } from "../constants/messages";
+import { LoginService } from '../login.service';
+import { messages } from '../constants/messages';
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: 'ls-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   private userEmail: string;
   private userPassword: string;
   private validMessages = messages;
   private loginForm: FormGroup;
+  private subscription: Subject<any> = new Subject();
 
-  constructor(private loginService: LoginService, private formBuilder: FormBuilder) {}
+  constructor(private loginService: LoginService, private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this.createForm();
@@ -23,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   private createForm(): void {
     this.loginForm = this.formBuilder.group({
-      email: ['', [
+      login: ['', [
         Validators.required,
         Validators.minLength(4)
       ]],
@@ -39,10 +42,14 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let user: User = {
-      login: this.userEmail,
-      password: this.userPassword
-    };
-    this.loginService.login(user);
+    this.loginService
+      .login(this.loginForm.getRawValue())
+      .pipe(takeUntil(this.subscription))
+      .subscribe(user => this.loginService.notify(user));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.next();
+    this.subscription.complete();
   }
 }

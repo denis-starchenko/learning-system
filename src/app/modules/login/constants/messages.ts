@@ -1,7 +1,7 @@
 import { ValidationMessages } from "../interfaces/validation-messages";
 
 export const messages: ValidationMessages = {
-  email: [
+  login: [
     {type: 'required', message: 'Email is required'},
     {type: 'minlength', message: 'Email must be at least 4 characters long'},
   ],
