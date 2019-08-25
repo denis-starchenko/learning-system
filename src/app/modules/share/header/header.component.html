@@ -2,9 +2,24 @@
   <span>Learning system</span>
   <button
     mat-button
+    *ngIf="!userInfo.firstName"
     [routerLink]="routerLink">
     <mat-icon>{{buttonIcon}}</mat-icon>
   </button>
+  <div
+    class="user-info"
+    *ngIf="userInfo.firstName">
+    <span>
+      {{userInfo.firstName}}
+      {{userInfo.lastName}}
+    </span>
+    <button
+      mat-button
+      [routerLink]="'/login'"
+      (click)="logOut()">
+      Logout
+    </button>
+  </div>
 </mat-toolbar>
 
 

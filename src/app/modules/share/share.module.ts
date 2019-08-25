@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { ShareRoutingModule } from "./share.routing.module";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserInfoService } from "./header/user-info.service";
 
 
 
@@ -19,6 +20,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   exports: [
     HeaderComponent
+  ],
+  providers: [
+    UserInfoService
   ]
 })
 export class ShareModule { }

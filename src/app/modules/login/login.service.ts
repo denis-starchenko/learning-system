@@ -18,7 +18,7 @@ export class LoginService {
     return this.http.post<User>(`${this.url}/api/v1/login`, user)
   }
 
-  notify(user) {
+  notify(user): void {
     this.authService.setAuthorizationToken(user.token);
     this.subject.next(user);
   }

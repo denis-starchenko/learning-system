@@ -8,6 +8,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatSidenavModule,
+  MatPaginatorModule,
+  MatTableModule,
 } from "@angular/material";
 
 
@@ -22,7 +24,9 @@ import {
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
   exports: [
     MatButtonModule,
@@ -31,7 +35,9 @@ import {
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatPaginatorModule,
+    MatTableModule
   ]
 })
 export class CustomMaterialModule { }
