@@ -12,8 +12,7 @@ import { AuthService } from "../../../services/auth.service";
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private navSubscription: Subscription;
-  private authSubscription: Subject<any> = new Subject();
-  private userInfoSubscription: Subject<any> = new Subject();
+  private destroy$: Subject<any> = new Subject();
   private buttonIcon: string = 'person_add';
   private routerLink: string = '/register';
   private router: Router;
@@ -47,14 +46,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscribeAuthService(): void {
     this.authService
       .getObservable()
-      .pipe(takeUntil(this.authSubscription))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.subscribeUserInfoService());
   }
 
   subscribeUserInfoService(): void {
     this.userInfoService
       .getUserInfo()
-      .pipe(takeUntil(this.userInfoSubscription))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(user => this.userHandler(user));
   }
 
@@ -69,10 +68,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   unsubscribe(): void {
     this.navSubscription.unsubscribe();
-    this.authSubscription.next();
-    this.authSubscription.complete();
-    this.userInfoSubscription.next();
-    this.userInfoSubscription.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   userHandler(user) {
