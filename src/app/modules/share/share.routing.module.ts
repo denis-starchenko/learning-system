@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('../register/register.module').then(mod => mod.RegisterModule)
   },
   {
+    path: 'groups',
+    loadChildren: () => import('../users/users.module').then(mod => mod.UsersModule)
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
