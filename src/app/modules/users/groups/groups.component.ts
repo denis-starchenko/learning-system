@@ -12,7 +12,7 @@ import { takeUntil } from "rxjs/operators";
 export class GroupsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   private dataSource: MatTableDataSource<[]>;
-  private displayedColumns: string[] = ['position', 'name', 'studentsCount'];
+  private displayedColumns: string[] = ['position', 'name', 'studentsCount', 'dateUpdated', 'cost'];
   private subscription: Subject<any> = new Subject();
 
   constructor(private grService: GroupsService) {
