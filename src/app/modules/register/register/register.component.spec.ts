@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RegisterComponent } from './register.component';
-import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { User } from "../interfaces/user";
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {RegisterComponent} from './register.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {User} from "../interfaces/user";
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -23,7 +23,7 @@ describe('RegisterComponent', () => {
         {provide: 'RegisterService', useValue: regServiceSpy}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -33,47 +33,80 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('#ngOnInit', () => {
+    let component = jasmine.createSpyObj('RegisterComponent', ['createForm']);
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('Method createForm should be called', function () {
+      component.createForm();
+      expect(component.createForm).toHaveBeenCalled();
+    });
   });
 
-  it('should have register method', function() {
-    expect(regServiceSpy.register).toBeDefined();
+  describe('#onSubmit', () => {
+    it('should have register method', function () {
+      expect(regServiceSpy.register).toBeDefined();
+    });
+
+    it('should invoke the method register', function () {
+      regServiceSpy.register();
+      expect(regServiceSpy.register).toHaveBeenCalled();
+    });
+
+    it('should accept user object', function () {
+      regServiceSpy.register(user);
+      expect(regServiceSpy.register).toHaveBeenCalledWith(user);
+    });
   });
 
-  it('should invoke the method register', function() {
-    regServiceSpy.register();
-    expect(regServiceSpy.register).toHaveBeenCalled();
-  });
+  describe('#createForm', function () {
+    it('login should be invalid', function () {
+      component.getControl('login').setValue('');
+      expect(component.getControl('login').valid).toBeFalsy();
+    });
 
-  it('should accept user object', function() {
-    regServiceSpy.register(user);
-    expect(regServiceSpy.register).toHaveBeenCalledWith(user);
-  });
+    it('firstName should be invalid', function () {
+      component.getControl('firstName').setValue('');
+      expect(component.getControl('firstName').valid).toBeFalsy();
+    });
 
-  it('form should be invalid', function() {
-    component.getControl('login').setValue('');
-    component.getControl('firstName').setValue('');
-    component.getControl('lastName').setValue('');
-    component.getControl('password').setValue('');
+    it('lastName should be invalid', function () {
+      component.getControl('lastName').setValue('');
+      expect(component.getControl('lastName').valid).toBeFalsy();
+    });
 
-    expect(component.getControl('login').valid).toBeFalsy();
-    expect(component.getControl('firstName').valid).toBeFalsy();
-    expect(component.getControl('lastName').valid).toBeFalsy();
-    expect(component.getControl('password').valid).toBeFalsy();
-  });
+    it('password should be invalid', function () {
+      component.getControl('password').setValue('');
+      expect(component.getControl('password').valid).toBeFalsy();
+    });
 
-  it('form should be valid', function() {
-    component.getControl('login').setValue('user@mail.com');
-    component.getControl('firstName').setValue('firstName');
-    component.getControl('lastName').setValue('lastName');
-    component.getControl('password').setValue('Mnj!13j69');
-    component.getControl('confirmPassword').setValue('Mnj!13j69');
+    it('login should be valid', function () {
+      component.getControl('login').setValue('user@mail.com');
+      expect(component.getControl('login').valid).toBeTruthy();
+    });
 
-    expect(component.getControl('login').valid).toBeTruthy();
-    expect(component.getControl('firstName').valid).toBeTruthy();
-    expect(component.getControl('lastName').valid).toBeTruthy();
-    expect(component.getControl('password').valid).toBeTruthy();
-    expect(component.getControl('confirmPassword').valid).toBeTruthy();
+    it('firstName should be valid', function () {
+      component.getControl('firstName').setValue('firstName');
+      expect(component.getControl('firstName').valid).toBeTruthy();
+    });
+
+    it('lastName should be valid', function () {
+      component.getControl('lastName').setValue('lastName');
+      expect(component.getControl('lastName').valid).toBeTruthy();
+    });
+
+    it('password should be valid', function () {
+      component.getControl('password').setValue('Mnj!13j69');
+      expect(component.getControl('password').valid).toBeTruthy();
+    });
+
+    it('confirmPassword should be valid', function () {
+      component.getControl('password').setValue('Mnj!13j69');
+      component.getControl('confirmPassword').setValue('Mnj!13j69');
+      expect(component.getControl('confirmPassword').valid).toBeTruthy();
+    });
   });
 });
