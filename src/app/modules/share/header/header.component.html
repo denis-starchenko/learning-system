@@ -1,25 +1,54 @@
-<mat-toolbar>
-  <span>Learning system</span>
-  <button
-    mat-button
-    *ngIf="!userInfo.firstName"
-    [routerLink]="routerLink">
-    <mat-icon>{{buttonIcon}}</mat-icon>
-  </button>
-  <div
-    class="user-info"
-    *ngIf="userInfo.firstName">
+<mat-toolbar [ngClass]="{
+              'teacher': userType === 'teacher',
+              'student': userType !== 'teacher'}">
+
+  <ng-container *ngIf="userType === 'teacher' else student">
+    <span>Learning system</span>
+    <button
+      mat-button
+      *ngIf="!userInfo.firstName"
+      [routerLink]="routerLink">
+      <mat-icon>{{buttonIcon}}</mat-icon>
+    </button>
+    <div
+      class="user-info"
+      *ngIf="userInfo.firstName">
     <span>
       {{userInfo.firstName}}
       {{userInfo.lastName}}
     </span>
+      <button
+        mat-button
+        [routerLink]="'/login'"
+        (click)="logOut()">
+        Logout
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-template #student>
+    <span>Students version</span>
     <button
       mat-button
-      [routerLink]="'/login'"
-      (click)="logOut()">
-      Logout
+      *ngIf="!userInfo.firstName"
+      [routerLink]="routerLink">
+      <mat-icon>{{buttonIcon}}</mat-icon>
     </button>
-  </div>
+    <div
+      class="user-info"
+      *ngIf="userInfo.firstName">
+    <span>
+      {{userInfo.firstName}}
+      {{userInfo.lastName}}
+    </span>
+      <button
+        mat-button
+        [routerLink]="'/login'"
+        (click)="logOut()">
+        Logout
+      </button>
+    </div>
+  </ng-template>
 </mat-toolbar>
 
 
