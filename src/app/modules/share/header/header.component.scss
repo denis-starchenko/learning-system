@@ -1,7 +1,6 @@
 @import "colors-variable";
 
 mat-toolbar {
-  background-color: $header_background;
   -webkit-box-shadow: $header_box_shadow;
   -moz-box-shadow: $header_box_shadow;
   box-shadow: $header_box_shadow;
@@ -20,4 +19,13 @@ mat-toolbar {
   }
 }
 
+.teacher {
+  background-color: $header_background_teacher;
+  color: $black;
+}
+
+.student {
+  background-color: $header_background_student;
+  color: $white;
+}
 

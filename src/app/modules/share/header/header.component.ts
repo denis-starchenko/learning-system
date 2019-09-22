@@ -1,9 +1,11 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from "@angular/router"
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from "rxjs";
 import { UserInfoService } from "./user-info.service";
 import { AuthService } from "../../../services/auth.service";
+import { UserTypes } from "../../constants/constants";
+
 
 @Component({
   selector: 'ls-header',
@@ -22,6 +24,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     firstName: '',
     lastName: ''
   };
+  private userTypeConstant = UserTypes;
+  private userType: string = '';
 
   constructor(router: Router, auth: AuthService, userInfo: UserInfoService) {
     this.router = router;
@@ -78,6 +82,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         firstName: user.user.firstName,
         lastName: user.user.lastName
       }
+      this.setHeaderTemplate(user.user);
     } else {
       this.router.navigateByUrl('/register');
     }
@@ -94,5 +99,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         lastName: ''
       };
     }
+  }
+
+  setHeaderTemplate(user): void {
+    this.userType = this.userTypeConstant[user.roleName];
   }
 }

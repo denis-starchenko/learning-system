@@ -6,6 +6,7 @@ $ghostwhite: #f8f8ff;
 $yellow: #fff016;
 $darkgray: #a9a9a9;
 $transparent: transparent;
+$black: #000000;
 
 /*
 *global app component
@@ -15,7 +16,8 @@ $app_background: $ghostwhite;
 /*
 *header component
 */
-$header_background: $yellow;
+$header_background_teacher: $yellow;
+$header_background_student: #64ff16;
 $header_box_shadow: 3px 12px 10px -11px rgba(0,0,0,0.84);
 
 /*
