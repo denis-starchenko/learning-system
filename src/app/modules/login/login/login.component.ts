@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../login.service';
 import { messages } from '../constants/messages';
-import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { Router } from "@angular/router";
+import { select, Store } from "@ngrx/store";
+import { login } from "../../../store/actions/login.actions";
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'ls-login',
@@ -17,12 +18,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   private validMessages = messages;
   private loginForm: FormGroup;
   private subscription: Subject<any> = new Subject();
-  private loginService: LoginService;
   private formBuilder: FormBuilder;
   private router: Router;
+  private store;
 
-  constructor(ls: LoginService, fb: FormBuilder, router: Router) {
-    this.loginService = ls;
+  constructor(store: Store<{ token: string }>, fb: FormBuilder, router: Router) {
+    this.store = store.pipe(select('token'));
     this.formBuilder = fb;
     this.router = router;
   }
@@ -49,13 +50,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.loginService
-      .login(this.loginForm.getRawValue())
-      .pipe(takeUntil(this.subscription))
-      .subscribe(user => {
-        this.loginService.notify(user);
-        this.router.navigateByUrl('/groups');
-      });
+    this.store.dispatch(
+      login(this.loginForm.getRawValue()),
+      takeUntil(this.subscription)
+    );
   }
 
   ngOnDestroy(): void {

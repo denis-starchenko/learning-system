@@ -14,7 +14,7 @@ export class LoginService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  login(user: User) {
+  login(user) {
     return this.http.post<User>(`${this.url}/api/v1/login`, user)
   }
 
