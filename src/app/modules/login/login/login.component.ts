@@ -17,13 +17,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   private userPassword: string;
   private validMessages = messages;
   private loginForm: FormGroup;
-  private subscription: Subject<any> = new Subject();
+  private destroy: Subject<any> = new Subject();
   private formBuilder: FormBuilder;
   private router: Router;
   private store;
 
-  constructor(store: Store<{ token: string }>, fb: FormBuilder, router: Router) {
-    this.store = store.pipe(select('token'));
+  constructor(store: Store<any>, fb: FormBuilder, router: Router) {
+    this.store = store;
     this.formBuilder = fb;
     this.router = router;
   }
@@ -52,12 +52,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.store.dispatch(
       login(this.loginForm.getRawValue()),
-      takeUntil(this.subscription)
+      takeUntil(this.destroy)
     );
   }
 
   ngOnDestroy(): void {
-    this.subscription.next();
-    this.subscription.complete();
+    this.destroy.next();
+    this.destroy.complete();
   }
 }
