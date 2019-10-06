@@ -9,9 +9,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { AuthInterceptor } from "./Interceptors/auth-interceptor";
 import { AuthService } from "./services/auth.service";
 import { StoreModule } from "@ngrx/store";
-import * as loginReducers from "./store/reducers/login.reducers";
 import { EffectsModule } from "@ngrx/effects";
 import { LoginEffects } from "./store/effects/login.effects";
+import {reducers} from "./store";
 
 
 
@@ -26,7 +26,7 @@ import { LoginEffects } from "./store/effects/login.effects";
     CustomMaterialModule,
     ShareModule,
     HttpClientModule,
-    StoreModule.forRoot({token: loginReducers.reducer}),
+    StoreModule.forRoot({token: reducers.layout}),
     EffectsModule.forRoot([LoginEffects])
   ],
   providers: [

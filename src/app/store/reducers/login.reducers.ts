@@ -2,7 +2,7 @@ import {Action, createReducer, on} from '@ngrx/store';
 import * as ActionsComponents from "../actions/login.actions";
 
 export interface State {
-  token: string;
+  token: string
 }
 
 export const initialState: State = {
