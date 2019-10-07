@@ -1,8 +1,8 @@
 import {Action, createReducer, on} from '@ngrx/store';
-import * as ActionsComponents from "../actions/login.actions";
+import * as ActionsComponents from '../actions/login.actions';
 
 export interface State {
-  token: string
+  token: string;
 }
 
 export const initialState: State = {
@@ -11,9 +11,9 @@ export const initialState: State = {
 
 const loginReducer = createReducer(
   initialState,
-  on(ActionsComponents.login, state => ({...state}))
+  on(ActionsComponents.loginComplete, (state, action) => ({ ...state, token: action.payload.token }))
 );
 
 export function reducer(state: State | undefined, action: Action) {
   return loginReducer(state, action);
-};
+}

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from "rxjs";
-import {select, Store} from "@ngrx/store";
+import { Observable, Subject } from 'rxjs';
+import {select, Store} from '@ngrx/store';
+import {filter} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +9,18 @@ import {select, Store} from "@ngrx/store";
 export class AuthService {
   private subject = new Subject();
   private token: string;
-  private store;
 
   constructor(store: Store<{ token: string }>) {
-    this.store = store.pipe(select('token'));
+    store
+      .pipe(
+        select('login'),
+        filter(login => login && login.token)
+      )
+      .subscribe(login => this.notify(login.token));
   }
 
   setAuthorizationToken(token: string) {
     this.token = token;
-    this.notify(token);
   }
 
   getAuthorizationToken() {
