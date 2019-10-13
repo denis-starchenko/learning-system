@@ -3,9 +3,9 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
 import {Observable, of} from 'rxjs';
 import {catchError, map, mergeMap, tap} from 'rxjs/operators';
-import * as LoginActions from "../actions/login.actions";
-import {LoginService} from "../../modules/login/login.service";
-import {Router} from "@angular/router";
+import * as LoginActions from '../actions/login.actions';
+import {LoginService} from '../../modules/login/login.service';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class LoginEffects {
@@ -18,7 +18,7 @@ export class LoginEffects {
         mergeMap(action =>
           this.loginService.login({login: action.login, password: action.password})
             .pipe(
-              map(user => LoginActions.loginComplete({payload: user})),
+              map(user => this.login(user)),
               catchError(error => of(LoginActions.loginFailure({error})))
             )
         )
@@ -45,5 +45,9 @@ export class LoginEffects {
         })
       ),
     {dispatch: false}
-  )
+  );
+
+  private login(user) {
+    return LoginActions.loginComplete({payload: user});
+  }
 }
