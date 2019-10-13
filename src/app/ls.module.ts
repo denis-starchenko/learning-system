@@ -12,6 +12,7 @@ import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { LoginEffects } from "./store/effects/login.effects";
 import {reducers} from "./store";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 
 
 
@@ -27,7 +28,8 @@ import {reducers} from "./store";
     ShareModule,
     HttpClientModule,
     StoreModule.forRoot({token: reducers.layout}),
-    EffectsModule.forRoot([LoginEffects])
+    EffectsModule.forRoot([LoginEffects]),
+    StoreDevtoolsModule
   ],
   providers: [
     {
