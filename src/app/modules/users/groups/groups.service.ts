@@ -16,7 +16,6 @@ export class GroupsService {
   }
 
   createGroup(group) {
-    console.log(group);
     return this.http.post<DialogData>(`${this.url}/api/v1/groups`, group);
   }
 }

@@ -6,6 +6,7 @@ import { takeUntil } from "rxjs/operators";
 import { DialogAddGroupComponent } from "../dialog-add-group/dialog-add-group.component";
 import { DialogData } from "../interfaces/dialogData";
 import { Store } from "@ngrx/store";
+import { createGroup } from "../../../store/actions/groups.actions";
 
 @Component({
   selector: 'ls-groups',
@@ -19,7 +20,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
   private displayedColumnsRow: string[] = ['position', 'name', 'students_count', 'updated', 'cost'];
   private destroy: Subject<any> = new Subject();
 
-  constructor(private grService: GroupsService, public dialog: MatDialog) {
+  constructor(private grService: GroupsService, public dialog: MatDialog, private store: Store<any>) {
   }
 
   ngOnInit() {
@@ -72,9 +73,10 @@ export class GroupsComponent implements OnInit, OnDestroy {
           currencyCode: result.cost.currencyCode,
         }
       }
-      this.grService
-        .createGroup(data)
-        .subscribe(() => this.getGroupsList());
+
+      this.store.dispatch(
+        createGroup(data)
+      );
     });
   }
 }

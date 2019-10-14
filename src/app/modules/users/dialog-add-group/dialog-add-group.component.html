@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Fill all fields</h1>
+<div mat-dialog-content>
+  <p>Name</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.name" placeholder="Enter name of group">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-content>
+  <p>Description</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.description" placeholder="Enter description">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-content>
+  <p>Amount</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.students_count" placeholder="Enter amount of students">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-content>
+  <p>Price</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.cost.sum" placeholder="Enter prise">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-content>
+  <p>Currency</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.cost.currencyCode" placeholder="Enter currency">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button
+          (click)="onNoClick()">
+    Cancel
+  </button>
+  <button mat-button
+          [mat-dialog-close]="data"
+          cdkFocusInitial>
+    Create Table
+  </button>
+</div>
