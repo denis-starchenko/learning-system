@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@environment/environment";
+import { DialogData } from "../interfaces/dialogData";
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +13,10 @@ export class GroupsService {
 
   getGroups() {
     return this.http.get(`${this.url}/api/v1/groups`);
+  }
+
+  createGroup(group) {
+    console.log(group);
+    return this.http.post<DialogData>(`${this.url}/api/v1/groups`, group);
   }
 }

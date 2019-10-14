@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { messages } from '../constants/messages';
 import { takeUntil } from "rxjs/operators";
 import { Router } from "@angular/router";
-import { select, Store } from "@ngrx/store";
+import { Store } from "@ngrx/store";
 import { login } from "../../../store/actions/login.actions";
 import { Subject } from "rxjs";
 

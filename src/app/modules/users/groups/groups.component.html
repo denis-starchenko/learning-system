@@ -10,14 +10,14 @@
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="studentsCount">
+    <ng-container matColumnDef="students_count">
       <th mat-header-cell *matHeaderCellDef> Students amount </th>
-      <td mat-cell *matCellDef="let element"> {{element.studentsCount}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.students_count}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="dateUpdated">
+    <ng-container matColumnDef="updated">
       <th mat-header-cell *matHeaderCellDef> Date updated </th>
-      <td mat-cell *matCellDef="let element"> {{element.dateUpdated | date: 'fullDate'}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.updated | date: 'fullDate'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="cost">
@@ -25,10 +25,17 @@
       <td mat-cell *matCellDef="let element"> {{element.cost | currency}} </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [lsTooltip]="row.description"></tr>
+    <ng-container matColumnDef="add">
+      <th mat-header-cell *matHeaderCellDef>
+        <button (click)=" openDialog()">
+          <i class="material-icons">add</i>
+        </button>
+      </th>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsHeader"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsRow;" [lsTooltip]="row.description"></tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
-

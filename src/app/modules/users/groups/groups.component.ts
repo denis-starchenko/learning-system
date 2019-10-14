@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GroupsService } from "./groups.service";
-import { MatPaginator, MatTableDataSource } from "@angular/material";
+import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { DialogAddGroupComponent } from "../dialog-add-group/dialog-add-group.component";
+import { DialogData } from "../interfaces/dialogData";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: 'ls-groups',
@@ -12,16 +15,21 @@ import { takeUntil } from "rxjs/operators";
 export class GroupsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   private dataSource: MatTableDataSource<[]>;
-  private displayedColumns: string[] = ['position', 'name', 'studentsCount', 'dateUpdated', 'cost'];
-  private subscription: Subject<any> = new Subject();
+  private displayedColumnsHeader: string[] = ['position', 'name', 'students_count', 'updated', 'cost', 'add'];
+  private displayedColumnsRow: string[] = ['position', 'name', 'students_count', 'updated', 'cost'];
+  private destroy: Subject<any> = new Subject();
 
-  constructor(private grService: GroupsService) {
+  constructor(private grService: GroupsService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
+    this.getGroupsList();
+  }
+
+  getGroupsList() {
     this.grService
       .getGroups()
-      .pipe(takeUntil(this.subscription))
+      .pipe(takeUntil(this.destroy))
       .subscribe(groups => this.createTable(groups));
   }
 
@@ -34,8 +42,40 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.next();
-    this.subscription.complete();
+    this.destroy.next();
+    this.destroy.complete();
+  }
+
+  groupData: DialogData = {
+    name: '',
+    description: '',
+    students_count: 0,
+    cost: {
+      sum: 0,
+      currencyCode: '',
+    }
+  };
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddGroupComponent, {
+      width: '400px',
+      data: this.groupData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      const data = {
+        name: result.name,
+        description: result.description,
+        students_count: Number(result.students_count),
+        cost: {
+          sum: Number(result.cost.sum),
+          currencyCode: result.cost.currencyCode,
+        }
+      }
+      this.grService
+        .createGroup(data)
+        .subscribe(() => this.getGroupsList());
+    });
   }
 }
 

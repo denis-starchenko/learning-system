@@ -6,6 +6,9 @@ import { GroupsService } from "./groups/groups.service";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { TooltipDirective } from "./tooltip.directive";
 import { CurrencyPipe } from "./groups/currency.pipe";
+import { DialogAddGroupComponent } from "./dialog-add-group/dialog-add-group.component";
+import { MatDialogModule } from "@angular/material";
+import { FormsModule } from "@angular/forms";
 
 
 
@@ -13,15 +16,21 @@ import { CurrencyPipe } from "./groups/currency.pipe";
   declarations: [
     GroupsComponent,
     TooltipDirective,
-    CurrencyPipe
+    CurrencyPipe,
+    DialogAddGroupComponent
   ],
   imports: [
     CommonModule,
     UsersRoutingModule,
-    CustomMaterialModule
+    CustomMaterialModule,
+    MatDialogModule,
+    FormsModule
   ],
   providers: [
     GroupsService
+  ],
+  entryComponents: [
+    DialogAddGroupComponent
   ]
 })
 export class UsersModule { }
