@@ -6,6 +6,7 @@ import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import * as GroupActions from '../actions/groups.actions';
 import { Router } from '@angular/router';
 import { GroupsService } from "../../modules/users/groups/groups.service";
+import { CreateGroup } from '../actions/groups.actions';
 
 @Injectable()
 export class GroupsEffects {
@@ -14,17 +15,9 @@ export class GroupsEffects {
 
   createGroup$: Observable<Action> = createEffect(() =>
       this.actions$.pipe(
-        ofType(GroupActions.createGroup),
-        mergeMap(action =>
-          this.groupsService.createGroup({
-            name: action.name,
-            description: action.description,
-            students_count: action.students_count,
-            cost: {
-              sum: action.cost.sum,
-              currencyCode: action.cost.currencyCode
-            }
-          })
+        ofType(new CreateGroup().type),
+        mergeMap((action: any) =>
+          this.groupsService.createGroup(action.group)
             .pipe(
               map(group => this.getGroups(group)),
               catchError(error => of(GroupActions.createGroupFailure({error})))

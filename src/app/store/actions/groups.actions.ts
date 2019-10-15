@@ -1,17 +1,20 @@
 import {createAction, props} from '@ngrx/store';
 
-export const createGroup = createAction(
-  '[Groups Component] createGroup',
-  props<{
-    name: string,
-    description: string;
-    students_count: number;
-    cost: {
-      sum: number,
-      currencyCode: string
-    };
-  }>()
-);
+interface Group {
+  name: string,
+  description: string;
+  students_count: number;
+  cost: {
+    sum: number,
+    currencyCode: string
+  };
+}
+
+export class CreateGroup {
+  readonly type = '[Groups Component] createGroup';
+
+  constructor(public group: Group = null) {}
+}
 
 export const createGroupComplete = createAction(
   '[Groups Component] CreateGroup Complete',

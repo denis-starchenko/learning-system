@@ -6,7 +6,7 @@ import { takeUntil } from "rxjs/operators";
 import { DialogAddGroupComponent } from "../dialog-add-group/dialog-add-group.component";
 import { DialogData } from "../interfaces/dialogData";
 import { Store } from "@ngrx/store";
-import { createGroup } from "../../../store/actions/groups.actions";
+import { CreateGroup } from "../../../store/actions/groups.actions";
 
 @Component({
   selector: 'ls-groups',
@@ -75,7 +75,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
       }
 
       this.store.dispatch(
-        createGroup(data)
+        new CreateGroup(data)
       );
     });
   }
