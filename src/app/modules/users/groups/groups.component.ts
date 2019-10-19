@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { GroupsService } from "./groups.service";
-import { MatDialog, MatPaginator, MatTableDataSource } from "@angular/material";
+import { GroupsService } from './groups.service';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-import { DialogAddGroupComponent } from "../dialog-add-group/dialog-add-group.component";
-import { DialogData } from "../interfaces/dialogData";
-import { Store } from "@ngrx/store";
-import { createGroup } from "../../../store/actions/groups.actions";
+import { filter, takeUntil } from "rxjs/operators";
+import { DialogAddGroupComponent } from '../dialog-add-group/dialog-add-group.component';
+import { select, Store } from '@ngrx/store';
+import { CreateGroup } from '@actions/groups.actions';
+import * as GroupActions from '@actions/groups.actions';
+import { Group } from "../interfaces/groups";
+
 
 @Component({
   selector: 'ls-groups',
@@ -20,26 +22,32 @@ export class GroupsComponent implements OnInit, OnDestroy {
   private displayedColumnsRow: string[] = ['position', 'name', 'students_count', 'updated', 'cost'];
   private destroy: Subject<any> = new Subject();
 
-  constructor(private grService: GroupsService, public dialog: MatDialog, private store: Store<any>) {
+  constructor(private grService: GroupsService, public dialog: MatDialog, private store: Store<'groups'>) {
+    this.store
+      .pipe(
+        select('groups'),
+        filter(payload => payload.groups && payload.groups.length > 0),
+        takeUntil(this.destroy)
+      )
+      .subscribe(groups => {
+        this.createTable(groups);
+      });
   }
 
   ngOnInit() {
-    this.getGroupsList();
+    this.store.dispatch(
+      GroupActions.getGroupslist()
+    )
   }
 
-  getGroupsList() {
-    this.grService
-      .getGroups()
-      .pipe(takeUntil(this.destroy))
-      .subscribe(groups => this.createTable(groups));
-  }
-
-  createTable(groups) {
-    if (groups instanceof Array) {
-      groups.forEach((item, index) => item.position = index + 1);
+  createTable(data) {
+    if(data['groups'].length > 0) {
+      if (data['groups'] instanceof Array) {
+        data['groups'].forEach((item, index) => item.position = index + 1);
+      }
+      this.dataSource = new MatTableDataSource<[]>(data.groups);
+      this.dataSource.paginator = this.paginator;
     }
-    this.dataSource = new MatTableDataSource<[]>(groups);
-    this.dataSource.paginator = this.paginator;
   }
 
   ngOnDestroy() {
@@ -47,7 +55,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.destroy.complete();
   }
 
-  groupData: DialogData = {
+  groupData: Group = {
     name: '',
     description: '',
     students_count: 0,
@@ -64,18 +72,19 @@ export class GroupsComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      const data = {
-        name: result.name,
-        description: result.description,
-        students_count: Number(result.students_count),
+      const groupInfo = result.getRawValue();
+      const data: Group = {
+        name: groupInfo.name,
+        description: groupInfo.description,
+        students_count: groupInfo.amount,
         cost: {
-          sum: Number(result.cost.sum),
-          currencyCode: result.cost.currencyCode,
+          sum: groupInfo.prise,
+          currencyCode: groupInfo.currency.toUpperCase(),
         }
       }
 
       this.store.dispatch(
-        createGroup(data)
+        new CreateGroup (data)
       );
     });
   }

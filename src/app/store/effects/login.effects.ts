@@ -3,7 +3,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
 import {Observable, of} from 'rxjs';
 import {catchError, map, mergeMap, tap} from 'rxjs/operators';
-import * as LoginActions from '../actions/login.actions';
+import * as LoginActions from '@actions/login.actions';
 import {LoginService} from '../../modules/login/login.service';
 import {Router} from '@angular/router';
 

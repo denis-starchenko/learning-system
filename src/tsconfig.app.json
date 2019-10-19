@@ -4,7 +4,8 @@
     "outDir": "../out-tsc/app",
     "types": [],
     "paths": {
-      "@environment/*": [ "src/environments/*" ]
+      "@environment/*": [ "src/environments/*" ],
+      "@actions/*": [ "src/app/store/actions/*" ]
     }
   },
   "exclude": [

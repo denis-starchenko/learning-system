@@ -8,7 +8,7 @@ import { TooltipDirective } from "./tooltip.directive";
 import { CurrencyPipe } from "./groups/currency.pipe";
 import { DialogAddGroupComponent } from "./dialog-add-group/dialog-add-group.component";
 import { MatDialogModule } from "@angular/material";
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -24,7 +24,8 @@ import { FormsModule } from "@angular/forms";
     UsersRoutingModule,
     CustomMaterialModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     GroupsService

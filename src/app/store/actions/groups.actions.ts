@@ -1,24 +1,28 @@
-import {createAction, props} from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
+import { Group } from "../../modules/users/interfaces/groups";
 
-export const createGroup = createAction(
-  '[Groups Component] createGroup',
-  props<{
-    name: string,
-    description: string;
-    students_count: number;
-    cost: {
-      sum: number,
-      currencyCode: string
-    };
-  }>()
-);
+export class CreateGroup {
+  readonly type = '[Groups Component] createGroup';
 
-export const createGroupComplete = createAction(
-  '[Groups Component] CreateGroup Complete',
-  props<{ payload }>()
-);
+  constructor(public group: Group = null) {
+  }
+}
 
 export const createGroupFailure = createAction(
   '[Groups Component] CreateGroup Failure',
   props<{ error: any }>()
 );
+
+export const getGroupslist = createAction(
+  '[Groups Component] getGroupslist',
+);
+
+export const getGroupslistComplete = createAction(
+  '[Groups Component] getGroupslist Complete',
+  props<{ payload }>()
+);
+
+export const getGroupslistFailure = createAction(
+  '[Groups Component] getGroupslist Complete',
+  props<{ error: any }>()
+)
