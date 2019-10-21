@@ -1,0 +1,64 @@
+<h1 mat-dialog-title>Fill all fields</h1>
+<form [formGroup]="createGroup">
+  <div mat-dialog-content>
+    <p>Name</p>
+    <mat-form-field>
+      <input matInput
+             placeholder="Enter name of group"
+             type="text"
+             formControlName="name">
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-content>
+    <p>Description</p>
+    <mat-form-field>
+      <input matInput
+             placeholder="Enter description"
+             type="text"
+             formControlName="description">
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-content>
+    <p>Amount</p>
+    <mat-form-field>
+      <input matInput
+             placeholder="Enter amount of students"
+             type="number"
+             formControlName="amount">
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-content>
+    <p>Price</p>
+    <mat-form-field>
+      <input matInput
+             placeholder="Enter prise"
+             type="number"
+             formControlName="prise">
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-content>
+    <p>Currency</p>
+    <mat-form-field>
+      <input matInput
+             placeholder="Enter currency"
+             type="text"
+             formControlName="currency">
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancel()">
+      Cancel
+    </button>
+    <button mat-button
+            [mat-dialog-close]="createGroup"
+            [disabled]="!createGroup.valid"
+            cdkFocusInitial>
+      Create Table
+    </button>
+  </div>
+</form>

@@ -8,6 +8,13 @@ import { ShareModule } from "./modules/share/share.module";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { AuthInterceptor } from "./Interceptors/auth-interceptor";
 import { AuthService } from "./services/auth.service";
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+import { reducers } from "./store/reducers";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { effects } from './store/effects';
+import { environment } from "@environment/environment";
+
 
 
 @NgModule({
@@ -20,7 +27,13 @@ import { AuthService } from "./services/auth.service";
     BrowserAnimationsModule,
     CustomMaterialModule,
     ShareModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
+    EffectsModule.forRoot(effects),
   ],
   providers: [
     {
