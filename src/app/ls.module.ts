@@ -14,6 +14,7 @@ import { reducers } from "./store/reducers";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { effects } from './store/effects';
 import { environment } from "@environment/environment";
+import { UserStatusService } from "./services/userStatus.service";
 
 
 
@@ -41,7 +42,8 @@ import { environment } from "@environment/environment";
       useClass: AuthInterceptor,
       multi: true
     },
-    AuthService
+    AuthService,
+    UserStatusService
   ],
   bootstrap: [LsComponent]
 })

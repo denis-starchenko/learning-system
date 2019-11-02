@@ -6,6 +6,7 @@ import {catchError, map, mergeMap, tap} from 'rxjs/operators';
 import * as LoginActions from '@actions/login.actions';
 import {LoginService} from '../../modules/login/login.service';
 import {Router} from '@angular/router';
+import * as UserStatusActions from "@actions/user-status.actions";
 
 @Injectable()
 export class LoginEffects {
@@ -31,6 +32,7 @@ export class LoginEffects {
         ofType(LoginActions.loginComplete),
         tap(data => {
           this.loginService.notify(data.payload);
+          this.status(data.payload);
           this.router.navigateByUrl('/groups');
         })
       ),
@@ -49,5 +51,9 @@ export class LoginEffects {
 
   private login(user) {
     return LoginActions.loginComplete({payload: user});
+  };
+
+  private status(user) {
+    return UserStatusActions.statusComplete({payload: user.user.roleName});
   }
 }

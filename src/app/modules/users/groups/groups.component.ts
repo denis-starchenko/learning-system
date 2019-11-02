@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { GroupsService } from './groups.service';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
@@ -13,7 +12,8 @@ import { Group } from "../interfaces/groups";
 @Component({
   selector: 'ls-groups',
   templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.scss']
+  styleUrls: ['./groups.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -22,7 +22,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
   private displayedColumnsRow: string[] = ['position', 'name', 'students_count', 'updated', 'cost'];
   private destroy: Subject<any> = new Subject();
 
-  constructor(private grService: GroupsService, public dialog: MatDialog, private store: Store<'groups'>) {
+  constructor(
+    public dialog: MatDialog,
+    private store: Store<'groups'>,
+    private ref: ChangeDetectorRef
+  ) {
     this.store
       .pipe(
         select('groups'),
@@ -37,7 +41,8 @@ export class GroupsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.store.dispatch(
       GroupActions.getGroupslist()
-    )
+    );
+    this.ref.detectChanges();
   }
 
   createTable(data) {
@@ -47,6 +52,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
       }
       this.dataSource = new MatTableDataSource<[]>(data.groups);
       this.dataSource.paginator = this.paginator;
+      this.ref.markForCheck();
     }
   }
 

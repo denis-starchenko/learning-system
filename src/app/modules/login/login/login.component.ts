@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private router: Router;
   private store;
 
-  constructor(store: Store<any>, fb: FormBuilder, router: Router) {
+  constructor(store: Store<'login'>, fb: FormBuilder, router: Router) {
     this.store = store;
     this.formBuilder = fb;
     this.router = router;
