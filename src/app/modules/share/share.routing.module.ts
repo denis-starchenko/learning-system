@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { LsComponent } from "../../ls.component";
 
 const routes: Routes = [
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
   },
   {
     path: 'groups',
-    loadChildren: () => import('../users/users.module').then(mod => mod.UsersModule)
+    loadChildren: () => import('../users/users.module').then(mod => mod.UsersModule),
+    canActivate: [LsComponent]
   },
   {
     path: '',

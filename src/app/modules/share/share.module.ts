@@ -5,6 +5,7 @@ import { CustomMaterialModule } from "../custom-material/custom-material.module"
 import { ShareRoutingModule } from "./share.routing.module";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UserInfoService } from "./header/user-info.service";
+import { LsComponent } from "../../ls.component";
 
 
 
@@ -22,7 +23,8 @@ import { UserInfoService } from "./header/user-info.service";
     HeaderComponent
   ],
   providers: [
-    UserInfoService
+    UserInfoService,
+    LsComponent
   ]
 })
 export class ShareModule { }

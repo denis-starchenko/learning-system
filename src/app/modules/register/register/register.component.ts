@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { messages } from "../constants/messages";
 import { passwordValidator } from "../constants/password-validator";
 import { passwordMatchValidator } from "../constants/password-match-validator";
 import { RepeatPasswordEStateMatcher } from "../constants/repeat-password-matcher";
-import { RegisterService } from "../register.service";
-import { Subject } from "rxjs";
-import { takeUntil } from 'rxjs/operators';
+import { Store } from "@ngrx/store";
+import { register } from "@actions/register.actions";
+
 
 
 @Component({
@@ -14,13 +14,12 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit, OnDestroy {
-  private subscription: Subject<any> = new Subject();
+export class RegisterComponent implements OnInit {
   private registerForm: FormGroup;
   private validMessages = messages;
   private passwordsMatcher = new RepeatPasswordEStateMatcher;
 
-  constructor(private formBuilder: FormBuilder, private regService: RegisterService) { }
+  constructor(private store: Store<'register'>, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.createForm();
@@ -63,14 +62,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.regService
-      .register(this.registerForm.getRawValue())
-      .pipe(takeUntil(this.subscription))
-      .subscribe(user => this.regService.notify(user));
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.next();
-    this.subscription.complete();
+    this.store
+      .dispatch(
+        register(this.registerForm.getRawValue()),
+      )
   }
 }
